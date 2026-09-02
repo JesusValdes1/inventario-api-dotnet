@@ -1,0 +1,31 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - produccion
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Ubuntu server
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd ~/proyectos/projects/inventario-api-dotnet
+
+            git fetch origin produccion
+            git reset --hard origin/produccion
+
+            docker compose --env-file .env -f docker-compose.prod.yml build
+
+            docker compose --env-file .env -f docker-compose.prod.yml up -d postgres
+
+            docker compose --env-file .env -f docker-compose.prod.yml --profile migration run --rm migrations
+
+            docker compose --env-file .env -f docker-compose.prod.yml up -d
