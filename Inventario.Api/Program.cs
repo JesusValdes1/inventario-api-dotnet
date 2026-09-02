@@ -43,8 +43,6 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCors("Frontend");
 
-app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();

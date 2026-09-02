@@ -10,9 +10,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
-    ports:
-      - "5433:5432"
-
     volumes:
       - inventario_postgres_data:/var/lib/postgresql/data
 
@@ -55,6 +52,7 @@ services:
     build:
       context: ./inventario-frontend
       dockerfile: Dockerfile
+
       args:
         VITE_API_BASE_URL: /api
 
@@ -63,7 +61,7 @@ services:
     restart: unless-stopped
 
     ports:
-      - "5173:80"
+      - "8080:80"
 
     depends_on:
       - api
