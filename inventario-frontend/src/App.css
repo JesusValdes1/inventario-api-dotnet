@@ -2634,9 +2634,10 @@ button:focus-visible {
 }
 
 .categorias-primary-button:hover {
-  background: var(--accent-hover);
-  border-color: var(--accent-hover);
-  box-shadow: 0 5px 14px rgba(37, 99, 235, 0.18);
+  background: var(--primary-dark);
+  box-shadow:
+    0 6px 14px rgba(37, 99, 235, 0.2);
+  transform: translateY(-1px);
 }
 
 .categorias-primary-button:active {
